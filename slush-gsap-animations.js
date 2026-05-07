@@ -86,8 +86,6 @@ function runPreloader() {
       // СИГНАЛ: Прелоадер полностью завершен
       window.preloaderFinished = true;
       window.dispatchEvent(new Event("preloaderDone"));
-      console.log("[DEBUG] The preloader has signaled completion.");
-      console.log("[DEBUG] totalDuration:", tl.totalDuration());
     },
   });
 
