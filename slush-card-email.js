@@ -605,6 +605,12 @@ if (status === 'on_waitlist' && isExpired(check.data.expiresAt)) {
           ? `Too many attempts. Please wait ${retryAfter}s before trying again.`
           : `Too many attempts. Please wait a minute before trying again.`,
         INVALID_EMAIL: 'Invalid email.',
+        // Backend returns EmailInvalidAddressError when the address is on the
+        // mail provider's suppression list (prior hard bounce, spam complaint,
+        // or manual suppression). The address is syntactically valid, so we
+        // can't say "Invalid email" — that would imply a typo and the user
+        // would just retype the same address. Tell them to use a different one.
+        EmailInvalidAddressError: `We can't send emails to this address. Please use a different one.`,
       };
       // Return to the email step so the user can see the error and retry —
       // otherwise we stay stuck on the loading step with the form hidden.
