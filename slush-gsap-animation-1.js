@@ -496,15 +496,17 @@ const spendToRepayTL = gsap.timeline({
   },
 });
 
-spendToRepayTL.to(
-  ".about-image-wrapper",
-  { y: "-32%", scale: 0.35, ease: "power2.out" },
-  0
-  );
+spendToRepayTL
+  .to(
+    ".about-image-wrapper",
+    { y: "-32%", scale: 0.35, ease: "power2.out" },
+    0
+  )
+  .to(
     "[section-spend-overlay]",
-  { opacity: 0.7, ease: "power2.out" },
-  "<"
-);
+    { opacity: 0.7, ease: "power2.out" },
+    "<"
+  );
 // spendToRepayTL.to("[section-spend-overlay]", { opacity: 1 }, 0);
 
 // footer animation
