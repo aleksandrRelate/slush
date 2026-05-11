@@ -12,7 +12,7 @@ import { createDAppKit } from 'https://esm.sh/@mysten/dapp-kit-core';
 import { SuiGrpcClient } from 'https://esm.sh/@mysten/sui/grpc';
 
 // ── CONFIGURATION ─────────────────────────────
-const API_BASE_URL = 'https://slush-card-waitlist-prod.mystenlabs.com';
+const API_BASE_URL = 'https://slush-card-waitlist-staging.mystenlabs.com';
 const USE_MOCK_API = false;
 const DAPP_NAME = 'Slush Card Waitlist';
 const SLUSH_CHROME_URL = 'https://chromewebstore.google.com/detail/slush-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil';
