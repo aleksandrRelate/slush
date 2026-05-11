@@ -500,6 +500,7 @@ spendToRepayTL.to(
   ".about-image-wrapper",
   { y: "-32%", scale: 0.35, ease: "power2.out" },
   0
+  );
     "[section-spend-overlay]",
   { opacity: 0.7, ease: "power2.out" },
   "<"
