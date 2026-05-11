@@ -359,7 +359,7 @@ ScrollTrigger.create({
       .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.1 }, "-=0.2")
       .to({}, { duration: 0.1 })
       .to(".background-fixed", { duration: 0.5, background: "#0a0a0b" }, "<")
-      .to(imgWrap, { width: "calc(100vw - 5vh)", height: "95vh", borderRadius: "2.25rem", duration: 1, ease: "power3.inOut" }, "<")
+      .to(imgWrap, { width: "calc(100vw - 5vh)", height: "95vh", borderRadius: "2.25rem", outlineColor: "#232324", duration: 1, ease: "power3.inOut" }, "<")
       .to(zoomSection, { autoAlpha: 1, duration: 0.15 }, "<+=0.4")
       .to(aboutImg, { autoAlpha: 0, duration: 0.001 })
       .to("[spend-inner]", {
