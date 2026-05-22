@@ -263,7 +263,7 @@ ScrollTrigger.create({
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: "+=150%",
+        end: "+=120%",
         pin: false,
         scrub: true,
         markers: false,
@@ -271,10 +271,10 @@ ScrollTrigger.create({
     });
 
     mainTl
-      .to(heading, { y: 0, scale: 1, duration: 0.4, ease: "power2.out" })
+      .to(heading, { y: 0, scale: 1, duration: 0.3, ease: "power2.out" })
       // .to(headingWrapper, { y: "0rem", duration: 0.4, ease: "power2.out" }, "<")
-      .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.1 }, "-=0.2")
-      .to(".background-fixed", { background: "#0a0a0b", duration: 0.3, }, "<+=0.05")
+      .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.05 }, "-=0.2")
+      .to(".background-fixed", { background: "#0a0a0b", duration: 0.3, }, ">+=0.6")
       .to(section, { autoAlpha: 0, duration: 0.3, }, "<");
       // .to(zoomSection, { y:"0%", autoAlpha: 1, duration: 0.5 }, "<+=0.5")
       
