@@ -274,7 +274,7 @@ ScrollTrigger.create({
       .to(heading, { y: 0, scale: 1, duration: 0.4, ease: "power2.out" })
       // .to(headingWrapper, { y: "0rem", duration: 0.4, ease: "power2.out" }, "<")
       .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.1 }, "-=0.2")
-      .to(".background-fixed", { background: "#0a0a0b", duration: 0.5, }, ">-=0.2")
+      .to(".background-fixed", { background: "#0a0a0b", duration: 0.5, }, "<")
       .to(section, { autoAlpha: 0, duration: 0.5, }, "<");
       // .to(zoomSection, { y:"0%", autoAlpha: 1, duration: 0.5 }, "<+=0.5")
       
