@@ -8,7 +8,7 @@
 // direct standard:connect approach was hitting an intermittent
 // `window.opener is not available` failure on mobile Safari that we couldn't
 // resolve via sync-popup-trust patterns alone.
-import { createDAppKit } from 'https://esm.sh/@mysten/dapp-kit-core@1.3.0?bundle-deps';
+import { createDAppKit } from 'https://esm.sh/@mysten/dapp-kit-core@1.3.0?deps=@wallet-standard/errors@0.1.1';
 import { SuiGrpcClient } from 'https://esm.sh/@mysten/sui@2.15.0/grpc';
 
 // ── CONFIGURATION ─────────────────────────────
