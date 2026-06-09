@@ -604,7 +604,7 @@ mmFooter.add("(min-width: 480px)", () => {
     scrollTrigger: {
       trigger: ".footer-card",
       start: "top 40%",
-      end: "bottom bottom",
+      end: "top 20%",
       scrub: true,
     },
   });
