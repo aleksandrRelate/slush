@@ -190,10 +190,10 @@ if (navbarContainer) {
     start: "50% top",
     endTrigger: ".footer-card",
     end: "50% top",
-    onEnter: () => navbar.classList.add("is-collapsed"),
-    onLeaveBack: () => navbar.classList.remove("is-collapsed"),
-    onLeave: () => navbar.classList.remove("is-collapsed"),
-    onEnterBack: () => navbar.classList.add("is-collapsed"),
+    onEnter: () => navbarContainer.classList.add("is-collapsed"),
+    onLeaveBack: () => navbarContainer.classList.remove("is-collapsed"),
+    onLeave: () => navbarContainer.classList.remove("is-collapsed"),
+    onEnterBack: () => navbarContainer.classList.add("is-collapsed"),
   });
 }
 
