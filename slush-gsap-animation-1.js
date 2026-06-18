@@ -190,6 +190,7 @@ if (navbarContainer) {
     start: "50% top",
     endTrigger: ".footer-card",
     end: "50% top",
+    markers: true,
     onEnter: () => navbarContainer.classList.add("is-collapsed"),
     onLeaveBack: () => navbarContainer.classList.remove("is-collapsed"),
     onLeave: () => navbarContainer.classList.remove("is-collapsed"),
