@@ -255,16 +255,10 @@ if (navbarContainer) {
   ══════════════════════════════════════ */
   mmZoom.add("(max-width: 479px)", () => {
 
-    // gsap.set(headingWrapper, { y: "0rem" });
-    // gsap.set(zoomSection, { y:"100%", autoAlpha: 0 }); // сразу видима, без зум-reveal
-    // gsap.set([zoomHead], { autoAlpha: 0, y: 20 });
     gsap.set(".background-fixed", { background: "rgba(10,10,11,0)" });
     gsap.set([btn, imgWrap], { autoAlpha: 0, y: 60 });
     gsap.set(heading, { y: 120, scale: 1.1, transformOrigin: "center center" });
-    // gsap.set(".spend-terminal-glow", { autoAlpha: 0 });
-    // gsap.set(imgWrap, { width: "", height: "", borderRadius: "" }); // сброс зум-стилей
 
-    /* Heading + кнопка + картинка появляются */
     const mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -278,12 +272,10 @@ if (navbarContainer) {
 
     mainTl
       .to(heading, { y: 0, scale: 1, duration: 0.3, ease: "power2.out" })
-      // .to(headingWrapper, { y: "0rem", duration: 0.4, ease: "power2.out" }, "<")
       .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.05 }, "-=0.2")
-      .to(".background-fixed", { background: "#0a0a0b", duration: 0.3, }, ">+=0.6")
+      // ФИКС: overwrite: "auto" чтобы не конфликтовать с tlBlackBg
+      .to(".background-fixed", { background: "#0a0a0b", duration: 0.3, overwrite: "auto" }, ">+=0.6")
       .to(section, { autoAlpha: 0, duration: 0.3, }, "<");
-      // .to(zoomSection, { y:"0%", autoAlpha: 1, duration: 0.5 }, "<+=0.5")
-      
 
       const spendTlmob = gsap.timeline({
         scrollTrigger: {
@@ -320,7 +312,14 @@ if (navbarContainer) {
           },
         });
         
-        tlBlackBg.to(".background-fixed", { background: "rgba(10,10,11,0)" });
+        // ФИКС: overwrite: "auto"
+        tlBlackBg.to(".background-fixed", { background: "rgba(10,10,11,0)", overwrite: "auto" });
+
+        return () => {
+          mainTl.kill();
+          spendTlmob.kill();
+          tlBlackBg.kill();
+        };
     
   });
 
@@ -364,7 +363,8 @@ if (navbarContainer) {
       .to(headingWrapper, { y: "-22rem", duration: 0.5, ease: "power2.inOut" }, "<")
       .to([btn, imgWrap], { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.1 }, "-=0.2")
       .to({}, { duration: 0.1 })
-      .to(".background-fixed", { duration: 0.5, background: "#0a0a0b" }, "<")
+      // ФИКС: overwrite: "auto"
+      .to(".background-fixed", { duration: 0.5, background: "#0a0a0b", overwrite: "auto" }, "<")
       .to(headingWrapper, { autoAlpha: 0, duration: 0.6, ease: "expo.out" }, "<")
       .to(imgWrap, { width: "calc(100vw - 5vh)", height: "95vh", borderRadius: "2.25rem", outlineColor: "#232324", duration: 1, ease: "power3.inOut" }, "<")
       .to(zoomSection, { autoAlpha: 1, duration: 0.15 }, "<+=0.4")
@@ -387,7 +387,8 @@ if (navbarContainer) {
         },
       });
       
-      tlBlackBg.to(".background-fixed", { background: "rgba(10,10,11,0)" });
+      // ФИКС: overwrite: "auto"
+      tlBlackBg.to(".background-fixed", { background: "rgba(10,10,11,0)", overwrite: "auto" });
 
 
     /* Resize */
@@ -407,6 +408,11 @@ if (navbarContainer) {
         ScrollTrigger.refresh();
       }, 150);
     });
+
+    return () => {
+      mainTl.kill();
+      tlBlackBg.kill();
+    };
   });
 
 })();
@@ -489,9 +495,6 @@ tl2.to([headings[2], subtexts[2]].filter(Boolean), { autoAlpha: 1, y: 0, ease: "
 });
 
 
-
-
-
 // // --- spendToRepayTL не тронут ---
 const spendToRepayTL = gsap.timeline({
   scrollTrigger: {
@@ -514,41 +517,12 @@ spendToRepayTL
     { opacity: 0.7, ease: "power2.out" },
     "<"
   );
-// spendToRepayTL.to("[section-spend-overlay]", { opacity: 1 }, 0);
 
 // footer animation
 
-// Создаем объект matchMedia
-
 let mm = gsap.matchMedia();
 
-// mm.add("(max-width: 479px)", () => {
-//   // Настройки для мобилок (<= 479px)
-//   // gsap.to(".stack-wrapper", {
-//   //   scale: 0.8,
-//   //   ease: "none",
-//   //   scrollTrigger: {
-//   //     trigger: ".footer-card",
-//   //     start: "top 50%",
-//   //     end: "bottom bottom",
-//   //     scrub: 1,
-//   //   },
-//   // });
-
-//   gsap.to([".section-earn", ".section-refer", ".repay-section"], {
-//     ease: "none",
-//     borderRadius: "2rem", // уменьшенный радиус
-//     scrollTrigger: {
-//       trigger: ".footer-card",
-//       start: "top 50%",
-//       end: "bottom 85%",
-//       scrub: 1,
-//     },
-//   });
-// });
-
 mm.add("(min-width: 480px)", () => {
-  // Настройки для десктопа и планшетов (> 479px)
   gsap.to(".stack-wrapper", {
     scale: 0.5,
     ease: "none",
@@ -573,36 +547,21 @@ mm.add("(min-width: 480px)", () => {
 });
 
 gsap.from([".h2-footer", ".footer-h-subtext", "[footer-btn]"], {
-  y: 30, // выплывают снизу
-  autoAlpha: 0, // из прозрачности
-  duration: 0.8, // длительность анимации
-  stagger: 0.2, // задержка между появлением элементов (0.2 сек)
+  y: 30,
+  autoAlpha: 0,
+  duration: 0.8,
+  stagger: 0.2,
   ease: "power2.out",
   scrollTrigger: {
     trigger: ".footer-card",
-    start: "top 60%", // сработает чуть раньше или позже основного эффекта
-    toggleActions: "play none none reverse", // проиграть при скролле вниз, вернуть при скролле вверх
+    start: "top 60%",
+    toggleActions: "play none none reverse",
   },
 });
 
 let mmFooter = gsap.matchMedia();
 
-// mmFooter.add("(max-width: 479px)", () => {
-//   // Настройки специально для мобильных
-//   gsap.from(".footer-bg", {
-//     y: -100, // Небольшое смещение сверху
-//     autoAlpha: 0,
-//     scrollTrigger: {
-//       trigger: ".footer-card",
-//       start: "top bottom", // Начнет проявляться, как только верхушка покажется снизу
-//       end: "top 50%", // Закончит, когда футер дойдет до середины экрана
-//       scrub: 1, // Добавляем плавность (1 сек), чтобы не дергалось при скролле пальцем
-//     },
-//   });
-// });
-
 mmFooter.add("(min-width: 480px)", () => {
-  // Ваш исходный код для десктопа
   gsap.from(".footer-bg", {
     y: 600,
     scale: 1.3,
@@ -617,14 +576,14 @@ mmFooter.add("(min-width: 480px)", () => {
 });
 
 gsap.from(["[footer-bottom-el]"], {
-  y: 30, // выплывают снизу
-  autoAlpha: 0, // из прозрачности
-  duration: 0.8, // длительность анимации
-  stagger: 0.2, // задержка между появлением элементов (0.2 сек)
+  y: 30,
+  autoAlpha: 0,
+  duration: 0.8,
+  stagger: 0.2,
   ease: "power2.out",
   scrollTrigger: {
     trigger: ".footer-bottom",
-    start: "top 98%", // сработает чуть раньше или позже основного эффекта
+    start: "top 98%",
     toggleActions: "play none none reverse",
     markers: false,
   },
@@ -633,7 +592,7 @@ gsap.from(["[footer-bottom-el]"], {
 ScrollTrigger.create({
   trigger: ".footer-card",
   start: "top 50%",
-  onEnter: () => gsap.set(".about-image-wrapper", { autoAlpha: 0 }), // gsap.set вместо gsap.to
+  onEnter: () => gsap.set(".about-image-wrapper", { autoAlpha: 0 }),
   onLeaveBack: () => gsap.set(".about-image-wrapper", { autoAlpha: 1 }),
 });
 
@@ -661,23 +620,20 @@ document.addEventListener("DOMContentLoaded", function () {
 let mmSnap = gsap.matchMedia();
 
 mmSnap.add("(min-width: 480px)", () => {
-// Весь ваш код со ScrollTrigger и snap здесь
 
-//////
 const sectionsHeroToAbout = ["#section-hero", "#section-about"];
 
-// Создаем общий триггер для контейнера или проходим циклом
 gsap.to(sectionsHeroToAbout, {
   scrollTrigger: {
-    trigger: "#section-hero", // Родительский контейнер
+    trigger: "#section-hero",
     start: "bottom bottom",
     end: "bottom top",
     markers: false,
     snap: {
-      snapTo: 1 / (sectionsHeroToAbout.length - 1), // Рассчитываем точки остановки (0 и 1)
-      duration: { min: 0.5, max: 0.8 }, // Длительность анимации притяжения
-      delay: 0.01, // Задержка перед началом притяжения
-      ease: "power1.inOut" // Плавная кривая Безье
+      snapTo: 1 / (sectionsHeroToAbout.length - 1),
+      duration: { min: 0.5, max: 0.8 },
+      delay: 0.01,
+      ease: "power1.inOut"
     }
   }
 });
@@ -686,18 +642,17 @@ gsap.to(sectionsHeroToAbout, {
 
 const sectionsAboutToRepay = [".repay-section", "#section-about"];
 
-// Создаем общий триггер для контейнера или проходим циклом
 gsap.to(sectionsAboutToRepay, {
   scrollTrigger: {
-    trigger: ".repay-section", // Родительский контейнер
+    trigger: ".repay-section",
     start: "top bottom",
     end: "+=100%",
     markers: false,
     snap: {
-      snapTo: 1 / (sectionsAboutToRepay.length - 1), // Рассчитываем точки остановки (0 и 1)
-      duration: { min: 0.5, max: 0.8 }, // Длительность анимации притяжения
-      delay: 0.01, // Задержка перед началом притяжения
-      ease: "power1.inOut" // Плавная кривая Безье
+      snapTo: 1 / (sectionsAboutToRepay.length - 1),
+      duration: { min: 0.5, max: 0.8 },
+      delay: 0.01,
+      ease: "power1.inOut"
     }
   }
 });
@@ -706,18 +661,17 @@ gsap.to(sectionsAboutToRepay, {
 
 const sectionsRepayToRefer = [".repay-section", ".section-refer"];
 
-// Создаем общий триггер для контейнера или проходим циклом
 gsap.to(sectionsRepayToRefer, {
   scrollTrigger: {
-    trigger: ".section-refer", // Родительский контейнер
+    trigger: ".section-refer",
     start: "top bottom",
     end: "+=100%",
     markers: false,
     snap: {
-      snapTo: 1 / (sectionsRepayToRefer.length - 1), // Рассчитываем точки остановки (0 и 1)
-      duration: { min: 0.5, max: 0.8 }, // Длительность анимации притяжения
-      delay: 0.01, // Задержка перед началом притяжения
-      ease: "power1.inOut" // Плавная кривая Безье
+      snapTo: 1 / (sectionsRepayToRefer.length - 1),
+      duration: { min: 0.5, max: 0.8 },
+      delay: 0.01,
+      ease: "power1.inOut"
     }
   }
 });
@@ -726,18 +680,17 @@ gsap.to(sectionsRepayToRefer, {
 
 const sectionsoReferToEarn = [".section-earn", ".section-refer"];
 
-// Создаем общий триггер для контейнера или проходим циклом
 gsap.to(sectionsoReferToEarn, {
   scrollTrigger: {
-    trigger: ".section-earn", // Родительский контейнер
+    trigger: ".section-earn",
     start: "top bottom",
     end: "+=100%",
     markers: false,
     snap: {
-      snapTo: 1 / (sectionsoReferToEarn.length - 1), // Рассчитываем точки остановки (0 и 1)
-      duration: { min: 0.5, max: 0.8 }, // Длительность анимации притяжения
-      delay: 0.01, // Задержка перед началом притяжения
-      ease: "power1.inOut" // Плавная кривая Безье
+      snapTo: 1 / (sectionsoReferToEarn.length - 1),
+      duration: { min: 0.5, max: 0.8 },
+      delay: 0.01,
+      ease: "power1.inOut"
     }
   }
 });
@@ -746,30 +699,20 @@ gsap.to(sectionsoReferToEarn, {
 
 const sectionsoEarnToFooter = [".section-earn", ".footer-card"];
 
-// Создаем общий триггер для контейнера или проходим циклом
 gsap.to(sectionsoEarnToFooter, {
   scrollTrigger: {
-    trigger: ".footer-card", // Родительский контейнер
+    trigger: ".footer-card",
     start: "top bottom",
     end: "+=100%",
     markers: false,
     snap: {
-      snapTo: 1 / (sectionsoEarnToFooter.length - 1), // Рассчитываем точки остановки (0 и 1)
-      duration: { min: 0.5, max: 0.8 }, // Длительность анимации притяжения
-      delay: 0.1, // Задержка перед началом притяжения
-      ease: "power1.inOut" // Плавная кривая Безье
+      snapTo: 1 / (sectionsoEarnToFooter.length - 1),
+      duration: { min: 0.5, max: 0.8 },
+      delay: 0.1,
+      ease: "power1.inOut"
     }
   }
 });
 
-// Возвращаем функцию очистки (необязательно, но полезно)
-return () => {
-// GSAP сам удалит ScrollTrigger'ы, созданные внутри matchMedia
-};
+return () => {};
 });
-
-// // В начале инициализации GSAP
-// ScrollTrigger.config({ ignoreMobileResize: true });
-// // Опционально, если нет ScrollSmoother или он не конфликтует:
-// ScrollTrigger.normalizeScroll(true); или он не конфликтует:
-// ScrollTrigger.normalizeScroll(true);
