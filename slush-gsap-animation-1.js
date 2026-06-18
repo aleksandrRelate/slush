@@ -182,26 +182,20 @@ runPreloader();
 
 // navbar animation
 
-ScrollTrigger.create({
-  trigger: ".section-hero",
-  start: "50% top", // Когда 50% триггера достигают верха (top) экрана
-  onEnter: () =>
-    document.querySelector(".navbar-container").classList.add("is-collapsed"),
-  onLeaveBack: () =>
-    document
-      .querySelector(".navbar-container")
-      .classList.remove("is-collapsed"),
-});
-ScrollTrigger.create({
-  trigger: ".footer-card",
-  start: "50% top", // Когда 50% триггера достигают верха (top) экрана
-  onEnter: () =>
-    document.querySelector(".navbar-container").classList.remove("is-collapsed"),
-  onLeaveBack: () =>
-    document
-      .querySelector(".navbar-container")
-      .classList.add("is-collapsed"),
-});
+const navbar = document.querySelector(".navbar-container");
+
+if (navbar) {
+  ScrollTrigger.create({
+    trigger: ".section-hero",
+    start: "50% top",
+    endTrigger: ".footer-card",
+    end: "50% top",
+    onEnter: () => navbar.classList.add("is-collapsed"),
+    onLeaveBack: () => navbar.classList.remove("is-collapsed"),
+    onLeave: () => navbar.classList.remove("is-collapsed"),
+    onEnterBack: () => navbar.classList.add("is-collapsed"),
+  });
+}
 
 
 
