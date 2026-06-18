@@ -192,6 +192,18 @@ ScrollTrigger.create({
       .querySelector(".navbar-container")
       .classList.remove("is-collapsed"),
 });
+ScrollTrigger.create({
+  trigger: ".footer-card",
+  start: "50% top", // Когда 50% триггера достигают верха (top) экрана
+  onEnter: () =>
+    document.querySelector(".navbar-container").classList.remove("is-collapsed"),
+  onLeaveBack: () =>
+    document
+      .querySelector(".navbar-container")
+      .classList.add("is-collapsed"),
+});
+
+
 
 // about section animation
 
