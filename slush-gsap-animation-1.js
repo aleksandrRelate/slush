@@ -182,9 +182,9 @@ runPreloader();
 
 // navbar animation
 
-const navbar = document.querySelector(".navbar-container");
+const navbarContainer = document.querySelector(".navbar-container");
 
-if (navbar) {
+if (navbarContainer) {
   ScrollTrigger.create({
     trigger: ".section-hero",
     start: "50% top",
